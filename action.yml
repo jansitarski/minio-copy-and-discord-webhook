@@ -25,17 +25,17 @@ inputs:
   webhook:
     description: 'Set a target directory for deployment (with a leading slash).'
     required: false
-    default: '/'
+    default: 'error'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    #SLACK_HOOK: ${{ inputs.webhook }}
     MINIO_ENDPOINT: ${{ inputs.endpoint }}
     MINIO_ACCESS_KEY: ${{ inputs.access_key }}
     MINIO_SECRET_KEY: ${{ inputs.secret_key }}
     SOURCE_FILE: ${{ inputs.source_file }}
     TARGET_DIR: '${{ inputs.bucket }}${{ inputs.target_dir }}'
+    WEBHOOK_URL: ${{ inputs.webhook }}
 
 branding:
   icon: 'upload-cloud'
