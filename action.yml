@@ -14,7 +14,7 @@ inputs:
   bucket:
     description: 'Set the target minio bucket for deployment.'
     required: true
-  source_dir:
+  source_file:
     description: 'Set an input directory for deployment.'
     required: false
     default: 'public'
@@ -22,20 +22,21 @@ inputs:
     description: 'Set a target directory for deployment (with a leading slash).'
     required: false
     default: '/'
+  webhook:
+    description: 'Set a target directory for deployment (with a leading slash).'
+    required: false
+    default: '/'
 runs:
   using: 'docker'
   image: 'Dockerfile'
   env:
-    SLACK_HOOK: ${{ inputs.slack_hook }}
+    #SLACK_HOOK: ${{ inputs.webhook }}
     MINIO_ENDPOINT: ${{ inputs.endpoint }}
     MINIO_ACCESS_KEY: ${{ inputs.access_key }}
     MINIO_SECRET_KEY: ${{ inputs.secret_key }}
-    FILE_TO_DOWNLOAD: ${{ inputs.file }}
-    MSG: ${{ inputs.slack_msg }}
-    BOT: ${{ inputs.slack_botname }}
-  args:
-    - ${{ inputs.source_dir }}
-    - '${{ inputs.bucket }}${{ inputs.target_dir }}'
+    SOURCE_FILE: ${{ inputs.source_file }}
+    TARGET_DIR: '${{ inputs.bucket }}${{ inputs.target_dir }}'
+
 branding:
   icon: 'upload-cloud'
   color: 'red'
