@@ -1,6 +1,6 @@
-name: 'Minio Upload and Slack Notify'
-description: 'Upload to Minio Storage and send notification to slack.'
-author: 'iamapinan'
+name: 'Minio Upload and Discord webhook'
+description: 'Upload to Minio Storage and send notification to Discord.'
+author: 'Jan Sitarski'
 inputs:
   endpoint:
     description: 'Minio endpoint of object storage host'
