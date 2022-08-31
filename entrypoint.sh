@@ -1,9 +1,15 @@
 #!/usr/bin/env bash
 mc alias set deploy $MINIO_ENDPOINT $MINIO_ACCESS_KEY $MINIO_SECRET_KEY --api S3v4
-ls -al
 echo "deploy to: $SOURCE_FILE deploy/$TARGET_DIR"
 mc cp --recursive $SOURCE_FILE "deploy/"$TARGET_DIR
-#echo "URL to download."
-#url=$(mc share download deploy/$2$FILE_TO_DOWNLOAD  --json | jq -r '.share')
-#echo $url
-#curl -X POST --data-urlencode "payload={\"channel\": \"#general\", \"username\": \"$BOT\", \"text\": \"$MSG $url\", \"icon_emoji\": \":rocket:\"}" $SLACK_HOOK
+
+if [ $WEBHOOK_URL != 'error' ]
+then
+  echo "Send webhook $WEBHOOK_URL"
+  curl -H "Content-Type: application/json" \
+          -d '{"username": "MinIO",  "embeds": [{
+              "title": $WEBHOOK_TITLE,
+              "description": $WEBHOOK_DESC
+              }]}' $WEBHOOK_URL
+fi
+
