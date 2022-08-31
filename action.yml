@@ -16,11 +16,11 @@ inputs:
     required: true
   source_file:
     description: 'Set an input directory for deployment.'
-    required: true
+    required: false
     default: 'public'
   target_dir:
     description: 'Set a target directory for deployment (with a leading slash).'
-    required: true
+    required: false
     default: '/'
   webhook:
     description: 'Set Discord webhook address.'
@@ -33,7 +33,7 @@ inputs:
   webhook_desc:
     description: "Set webhook content."
     required: false
-    default: "Uploaded ${{ inputs.source_file }} to ${{ inputs.bucket }} bucket"
+    default: "Uploaded ${{ github.event.inputs.source_file }} to ${{ github.event.inputs.bucket }} bucket"
 runs:
   using: 'docker'
   image: 'Dockerfile'
@@ -41,12 +41,13 @@ runs:
     MINIO_ENDPOINT: ${{ inputs.endpoint }}
     MINIO_ACCESS_KEY: ${{ inputs.access_key }}
     MINIO_SECRET_KEY: ${{ inputs.secret_key }}
-    SOURCE_FILE: ${{ inputs.source_file }}
-    TARGET_DIR: '${{ inputs.bucket }}${{ inputs.target_dir }}'
     WEBHOOK_URL: ${{ inputs.webhook }}
     WEBHOOK_TITLE: ${{ inputs.webhook_title }}
     WEBHOOK_DESC: ${{ inputs.webhook_desc }}
+  args:
+    - ${{ inputs.source_file }}
+    - '${{ inputs.bucket }}${{ inputs.target_dir }}'
 
 branding:
   icon: 'upload-cloud'
-  color: 'red'
+  color: 'purple'
