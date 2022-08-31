@@ -25,7 +25,28 @@ Put the following step in your workflow:
     webhool_desc: "Uploaded file to bucket"
 ```
 
-#### TODO: Workflow example
+Workflow example of uploading build artifacts to current date named folder:
+```yml
+- name: Get current date
+  id: date
+  run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
+
+- name: Minio Upload and Discord webhook
+  uses: jansitarski/minio-copy-discord-notify@master
+  with:
+    endpoint: ${{ secrets.MINIO_ADDRESS }}
+    access_key: ${{ secrets.MINIO_ACCESS_KEY }}
+    secret_key: ${{ secrets.MINIO_SECRET_KEY }}
+    bucket: ${{ secrets.MINIO_BUCKET }}
+    source_file: 'build/Build-linux.tar'
+    target_dir: '/Release-${{ steps.date.outputs.date }}/linux-amd64/'
+    # Optional inputs with their defaults:
+    webhook: ${{ secrets.DISCORD_WEBHOOK }}
+    webhook_title: "MinIO upload"
+    webhook_desc: "Uploaded file to $RELEASE_NAME bucket"
+  env:
+    RELEASE_NAME: Release-${{ steps.date.outputs.date }}
+```
 
 ## License
 
