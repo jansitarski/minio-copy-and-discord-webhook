@@ -31,9 +31,9 @@ inputs:
     required: false
     default: 'MinIO upload'
   webhook_desc:
-    description: 'Set webhook content.'
+    description: "Set webhook content."
     required: false
-    default: 'Uploaded ${{ inputs.source_file }} to ${{ inputs.bucket }}'
+    default: "Uploaded ${{ inputs.source_file }} to ${{ inputs.bucket }} bucket"
 runs:
   using: 'docker'
   image: 'Dockerfile'
