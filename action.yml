@@ -16,11 +16,11 @@ inputs:
     required: true
   source_file:
     description: 'Set an input directory for deployment.'
-    required: false
+    required: true
     default: 'public'
   target_dir:
     description: 'Set a target directory for deployment (with a leading slash).'
-    required: false
+    required: true
     default: '/'
   webhook:
     description: 'Set Discord webhook address.'

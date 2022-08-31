@@ -1,65 +1,31 @@
-# Minio Upload and Slack Notify
+# Minio Upload and Discord Webhook
 
-- Run [minio client][] in GitHub Actions to deploy files to Minio object storage. 
-- Get uploaded url
-- Send notification to slack. 
+- Run [minio client][] in GitHub Actions to deploy files to MinIO object storage.
+- Send webhook notification to Discord integration. 
 
-It uses the `mc mirror --overwrite` command to deploy.
+It uses the `mc cp --recursive` command to upload.
 
 ## Usage
 
 Put the following step in your workflow:
 
 ```yml
-- name: Minio Deploy
-uses: iamapinan/minio-upload-and-slack-notify@v2.3
-with:
-  endpoint: ${{ secrets.MINIO_ENDPOINT }}
-  access_key: ${{ secrets.MINIO_ACCESS_KEY }}
-  secret_key: ${{ secrets.MINIO_SECRET_KEY }}
-  bucket: 'mybucket'
-  # Optional inputs with their defaults:
-  source_dir: 'public'
-  target_dir: '/'
-  file: 'app-release.apk'
-  slack_hook: ${{ secrets.SLACK_HOOK }}
-  slack_msg: "send builded file for test here is download info"
-  slack_botname: "Notify"
+- name: Minio upload
+  uses: jansitarski/minio-copy-discord-notify@master
+  with:
+    endpoint: ${{ secrets.MINIO_ADDRESS }}
+    access_key: ${{ secrets.MINIO_ACCESS_KEY }}
+    secret_key: ${{ secrets.MINIO_SECRET_KEY }}
+    bucket: 'bucket-name'
+    source_file: 'folder/file'
+    target_dir: '/'
+    # Optional inputs with their defaults:
+    webhook: 'https://discord.com/api/webhooks/123/w3bh00k_t0k3n'
+    webhook_title: "MinIO upload"
+    webhool_desc: "Uploaded file to bucket"
 ```
 
-Workflow example:
-
-```yml
-name: Deploy
-
-on:
-  pull_request:
-    types: [opened, synchronize]
-  push:
-    branches:
-      - master
-
-jobs:
-  build:
-    name: Deploy
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-
-      - name: Minio Deploy
-        uses: iamapinan/minio-upload-and-slack-notify@v2.3
-        with:
-          endpoint: ${{ secrets.MINIO_ENDPOINT }}
-          access_key: ${{ secrets.MINIO_ACCESS_KEY }}
-          secret_key: ${{ secrets.MINIO_SECRET_KEY }}
-          bucket: 'mybucket'
-          source_dir: 'public'
-          target_dir: '/'
-          file: 'app-release.apk'
-          slack_hook: ${{ secrets.SLACK_HOOK }}
-          slack_msg: "send builded file for test here is download info"
-          slack_botname: "Notify"
-```
+#### TODO: Workflow example
 
 ## License
 
