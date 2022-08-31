@@ -5,11 +5,9 @@ mc cp --recursive $SOURCE_FILE "deploy/"$TARGET_DIR
 
 if [ $WEBHOOK_URL != 'error' ]
 then
-  echo "Send webhook $WEBHOOK_URL"
-  curl -H "Content-Type: application/json" \
-          -d '{"username": "MinIO",  "embeds": [{
-              "title": $WEBHOOK_TITLE,
-              "description": $WEBHOOK_DESC
-              }]}' $WEBHOOK_URL
+  echo "Send webhook"
+  echo $WEBHOOK_TITLE
+  echo $WEBHOOK_DESC
+  curl -H "Content-Type: application/json" -d '{"username": "MinIO",  "embeds": [{ "title": "'$WEBHOOK_TITLE'", "description": "'$WEBHOOK_DESC'"}]}' $WEBHOOK_URL
 fi
 
