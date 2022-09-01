@@ -5,13 +5,15 @@
 
 It uses the `mc cp --recursive` command to upload.
 
-## Usage
+#### Disclaimer
+This is a container action, so it doensn't work in Windows runners.
 
+## Usage
 Put the following step in your workflow:
 
 ```yml
 - name: Minio upload
-  uses: jansitarski/minio-copy-discord-notify@master
+  uses: jansitarski/minio-copy-discord-notify@v1
   with:
     endpoint: ${{ secrets.MINIO_ADDRESS }}
     access_key: ${{ secrets.MINIO_ACCESS_KEY }}
@@ -32,7 +34,7 @@ Workflow example of uploading build artifacts to current date named folder:
   run: echo "::set-output name=date::$(date +'%Y-%m-%d')"
 
 - name: Minio Upload and Discord webhook
-  uses: jansitarski/minio-copy-discord-notify@master
+  uses: jansitarski/minio-copy-discord-notify@v1
   with:
     endpoint: ${{ secrets.MINIO_ADDRESS }}
     access_key: ${{ secrets.MINIO_ACCESS_KEY }}
