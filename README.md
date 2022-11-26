@@ -6,7 +6,7 @@
 It uses the `mc cp --recursive` command to upload.
 
 #### Disclaimer
-This is a container action, so it doensn't work in Windows runners.
+This is a container action, so it doensn't work in Windows runners.  
 Requests have to be made to console port
 
 ## Usage
