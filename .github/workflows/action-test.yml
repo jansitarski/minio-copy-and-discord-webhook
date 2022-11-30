@@ -16,7 +16,7 @@ jobs:
             mkdir folder
             touch folder/test.txt
       - name: Minio upload
-        uses: jansitarski/minio-copy-discord-notify@master
+        uses: jansitarski/minio-copy-discord-notify@test
         with:
           endpoint: ${{ secrets.MINIO_ADDRESS }}
           access_key: ${{ secrets.MINIO_ACCESS_KEY }}
@@ -25,6 +25,6 @@ jobs:
           source_file: 'folder/test.txt'
           target_dir: '/'
           # Optional inputs with their defaults:
-          webhook: ${{ secrets.DISCORD_WEBHOOK }}
-          webhook_title: "MinIO upload"
-          webhook_desc: "Uploaded file to bucket"
+          #webhook: ${{ secrets.DISCORD_WEBHOOK }}
+          #webhook_title: "MinIO upload"
+          #webhook_desc: "Uploaded file to bucket"
